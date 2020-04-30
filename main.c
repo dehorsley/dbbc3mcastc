@@ -64,7 +64,7 @@ int main() {
 			exit(1);
 		}
 		if (unmarshal_dbbc3_ddc_multicast_t(&packet, buf, n) < 0) {
-			fprintf(stderr, "error unmarshaling packet");
+			fprintf(stderr, "error unmarshaling packet\n");
 			continue;
 		}
 		s = marshal_json_dbbc3_ddc_multicast_t(&packet);

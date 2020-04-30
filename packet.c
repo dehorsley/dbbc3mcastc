@@ -26,17 +26,17 @@ ssize_t unmarshal_gcomo_t(gcomo_t *t, uint8_t *data, size_t n) {
 	uint8_t *p = data;
 	if (n < len_gcomo_t)
 		return -1;
-	t->agc = (data[0] << 0) | (data[1] << 8);
-	data += 2;
+	t->agc = (p[0] << 0) | (p[1] << 8);
+	p += 2;
 	n -= 2;
-	t->attenuation = (data[0] << 0) | (data[1] << 8);
-	data += 2;
+	t->attenuation = (p[0] << 0) | (p[1] << 8);
+	p += 2;
 	n -= 2;
-	t->total_power = (data[0] << 0) | (data[1] << 8);
-	data += 2;
+	t->total_power = (p[0] << 0) | (p[1] << 8);
+	p += 2;
 	n -= 2;
-	t->total_power_target = (data[0] << 0) | (data[1] << 8);
-	data += 2;
+	t->total_power_target = (p[0] << 0) | (p[1] << 8);
+	p += 2;
 	n -= 2;
 	return (p - data);
 }
@@ -46,17 +46,17 @@ ssize_t unmarshal_downconverter_t(downconverter_t *t, uint8_t *data, size_t n) {
 	uint8_t *p = data;
 	if (n < len_downconverter_t)
 		return -1;
-	t->output_enabled = (data[0] << 0) | (data[1] << 8);
-	data += 2;
+	t->output_enabled = (p[0] << 0) | (p[1] << 8);
+	p += 2;
 	n -= 2;
-	t->lock = (data[0] << 0) | (data[1] << 8);
-	data += 2;
+	t->lock = (p[0] << 0) | (p[1] << 8);
+	p += 2;
 	n -= 2;
-	t->attenuation = (data[0] << 0) | (data[1] << 8);
-	data += 2;
+	t->attenuation = (p[0] << 0) | (p[1] << 8);
+	p += 2;
 	n -= 2;
-	t->frequency = (data[0] << 0) | (data[1] << 8);
-	data += 2;
+	t->frequency = (p[0] << 0) | (p[1] << 8);
+	p += 2;
 	n -= 2;
 	return (p - data);
 }
@@ -67,8 +67,8 @@ ssize_t unmarshal_bit_statistics_t(bit_statistics_t *t, uint8_t *data, size_t n)
 	if (n < len_bit_statistics_t)
 		return -1;
 	for (int i = 0; i < 4; i++) {
-		t->pattern[i] = (data[0] << 0) | (data[1] << 8) | (data[2] << 16) | (data[3] << 24);
-		data += 4;
+		t->pattern[i] = (p[0] << 0) | (p[1] << 8) | (p[2] << 16) | (p[3] << 24);
+		p += 4;
 		n -= 4;
 	}
 	return (p - data);
@@ -80,9 +80,8 @@ ssize_t unmarshal_adb3l_t(adb3l_t *t, uint8_t *data, size_t n) {
 	if (n < len_adb3l_t)
 		return -1;
 	for (int i = 0; i < 4; i++) {
-		t->total_power[i] =
-		    (data[0] << 0) | (data[1] << 8) | (data[2] << 16) | (data[3] << 24);
-		data += 4;
+		t->total_power[i] = (p[0] << 0) | (p[1] << 8) | (p[2] << 16) | (p[3] << 24);
+		p += 4;
 		n -= 4;
 	}
 	for (int i = 0; i < 4; i++) {
@@ -91,9 +90,8 @@ ssize_t unmarshal_adb3l_t(adb3l_t *t, uint8_t *data, size_t n) {
 		n -= ret;
 	}
 	for (int i = 0; i < 3; i++) {
-		t->delay_correlation[i] =
-		    (data[0] << 0) | (data[1] << 8) | (data[2] << 16) | (data[3] << 24);
-		data += 4;
+		t->delay_correlation[i] = (p[0] << 0) | (p[1] << 8) | (p[2] << 16) | (p[3] << 24);
+		p += 4;
 		n -= 4;
 	}
 	return (p - data);
@@ -104,24 +102,23 @@ ssize_t unmarshal_core3h_t(core3h_t *t, uint8_t *data, size_t n) {
 	uint8_t *p = data;
 	if (n < len_core3h_t)
 		return -1;
-	t->timestamp = (data[0] << 0) | (data[1] << 8) | (data[2] << 16) | (data[3] << 24);
-	data += 4;
+	t->timestamp = (p[0] << 0) | (p[1] << 8) | (p[2] << 16) | (p[3] << 24);
+	p += 4;
 	n -= 4;
-	t->pps_delay = (data[0] << 0) | (data[1] << 8) | (data[2] << 16) | (data[3] << 24);
-	data += 4;
+	t->pps_delay = (p[0] << 0) | (p[1] << 8) | (p[2] << 16) | (p[3] << 24);
+	p += 4;
 	n -= 4;
-	t->total_power_cal_on = (data[0] << 0) | (data[1] << 8) | (data[2] << 16) | (data[3] << 24);
-	data += 4;
+	t->total_power_cal_on = (p[0] << 0) | (p[1] << 8) | (p[2] << 16) | (p[3] << 24);
+	p += 4;
 	n -= 4;
-	t->total_power_cal_off =
-	    (data[0] << 0) | (data[1] << 8) | (data[2] << 16) | (data[3] << 24);
-	data += 4;
+	t->total_power_cal_off = (p[0] << 0) | (p[1] << 8) | (p[2] << 16) | (p[3] << 24);
+	p += 4;
 	n -= 4;
-	t->tsys = (data[0] << 0) | (data[1] << 8) | (data[2] << 16) | (data[3] << 24);
-	data += 4;
+	t->tsys = (p[0] << 0) | (p[1] << 8) | (p[2] << 16) | (p[3] << 24);
+	p += 4;
 	n -= 4;
-	t->sefd = (data[0] << 0) | (data[1] << 8) | (data[2] << 16) | (data[3] << 24);
-	data += 4;
+	t->sefd = (p[0] << 0) | (p[1] << 8) | (p[2] << 16) | (p[3] << 24);
+	p += 4;
 	n -= 4;
 	return (p - data);
 }
@@ -131,8 +128,8 @@ ssize_t unmarshal_bbc_t(bbc_t *t, uint8_t *data, size_t n) {
 	uint8_t *p = data;
 	if (n < len_bbc_t)
 		return -1;
-	t->frequency = (data[0] << 0) | (data[1] << 8) | (data[2] << 16) | (data[3] << 24);
-	data += 4;
+	t->frequency = (p[0] << 0) | (p[1] << 8) | (p[2] << 16) | (p[3] << 24);
+	p += 4;
 	n -= 4;
 	t->bandwidth = *p++;
 	n--;
@@ -142,21 +139,17 @@ ssize_t unmarshal_bbc_t(bbc_t *t, uint8_t *data, size_t n) {
 	n--;
 	t->gain_lsb = *p++;
 	n--;
-	t->total_power_usb_cal_on =
-	    (data[0] << 0) | (data[1] << 8) | (data[2] << 16) | (data[3] << 24);
-	data += 4;
+	t->total_power_usb_cal_on = (p[0] << 0) | (p[1] << 8) | (p[2] << 16) | (p[3] << 24);
+	p += 4;
 	n -= 4;
-	t->total_power_lsb_cal_on =
-	    (data[0] << 0) | (data[1] << 8) | (data[2] << 16) | (data[3] << 24);
-	data += 4;
+	t->total_power_lsb_cal_on = (p[0] << 0) | (p[1] << 8) | (p[2] << 16) | (p[3] << 24);
+	p += 4;
 	n -= 4;
-	t->total_power_usb_cal_off =
-	    (data[0] << 0) | (data[1] << 8) | (data[2] << 16) | (data[3] << 24);
-	data += 4;
+	t->total_power_usb_cal_off = (p[0] << 0) | (p[1] << 8) | (p[2] << 16) | (p[3] << 24);
+	p += 4;
 	n -= 4;
-	t->total_power_lsb_cal_off =
-	    (data[0] << 0) | (data[1] << 8) | (data[2] << 16) | (data[3] << 24);
-	data += 4;
+	t->total_power_lsb_cal_off = (p[0] << 0) | (p[1] << 8) | (p[2] << 16) | (p[3] << 24);
+	p += 4;
 	n -= 4;
 	ret = unmarshal_bit_statistics_t(&t->bit_statistics, p, n);
 	p += ret;
