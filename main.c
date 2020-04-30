@@ -10,7 +10,7 @@
 #include "packet_marshal.h"
 
 const char mcast_addr[] = "224.0.0.255";
-const short mcast_port  = 2500;
+const short mcast_port  = 25000;
 
 const int MAX_UDP = 65535;
 
@@ -51,21 +51,26 @@ int main() {
 	}
 
 	ssize_t n;
-	char buf[MAX_UDP];
+	unsigned char buf[MAX_UDP];
+	json_t *s;
 	struct sockaddr_in from;
 	socklen_t len = sizeof(from);
 
-    dbbc3_ddc_multicast_t  packet = {};
+	dbbc3_ddc_multicast_t packet = {};
 	for (;;) {
 		if ((n = recvfrom(sock, buf, sizeof(dbbc3_ddc_multicast_t), 0,
 		                  (struct sockaddr *)&from, &len)) < 0) {
 			perror("recv");
 			exit(1);
 		}
-        if (unmarshal_dbbc3_ddc_multicast_t(&packet, buf, n) < 0) {
-            fprintf(stderr, "error unmarshaling packet");
-            continue;
-        }
-        printf("%u\n", packet.core3h[0].pps_delay);
+		if (unmarshal_dbbc3_ddc_multicast_t(&packet, buf, n) < 0) {
+			fprintf(stderr, "error unmarshaling packet");
+			continue;
+		}
+		s = marshal_json_dbbc3_ddc_multicast_t(&packet);
+		if (s == NULL)
+			continue;
+		json_dumpf(s, stdout, JSON_INDENT(1));
+		json_decref(s);
 	}
 }
