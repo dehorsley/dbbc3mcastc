@@ -21,9 +21,9 @@ const size_t len_dbbc3_ddc_multicast_t = 0 + 32 * (0 + 1) + 8 * (0 + len_gcomo_t
                                          8 * (0 + len_downconverter_t) + 8 * (0 + len_adb3l_t) +
                                          8 * (0 + len_core3h_t) + 128 * (0 + len_bbc_t);
 
-size_t unmarshal_gcomo_t(gcomo_t *t, void *data, size_t n) {
+size_t unmarshal_gcomo_t(gcomo_t *t, char *data, size_t n) {
 	ssize_t ret;
-	uint8_t *p = data;
+	char *p = data;
 	if (n < len_gcomo_t)
 		return -1;
 	t->agc = (data[0] << 0) | (data[1] << 8);
@@ -41,9 +41,9 @@ size_t unmarshal_gcomo_t(gcomo_t *t, void *data, size_t n) {
 	return (p - data);
 }
 
-size_t unmarshal_downconverter_t(downconverter_t *t, void *data, size_t n) {
+size_t unmarshal_downconverter_t(downconverter_t *t, char *data, size_t n) {
 	ssize_t ret;
-	uint8_t *p = data;
+	char *p = data;
 	if (n < len_downconverter_t)
 		return -1;
 	t->output_enabled = (data[0] << 0) | (data[1] << 8);
@@ -61,9 +61,9 @@ size_t unmarshal_downconverter_t(downconverter_t *t, void *data, size_t n) {
 	return (p - data);
 }
 
-size_t unmarshal_bit_statistics_t(bit_statistics_t *t, void *data, size_t n) {
+size_t unmarshal_bit_statistics_t(bit_statistics_t *t, char *data, size_t n) {
 	ssize_t ret;
-	uint8_t *p = data;
+	char *p = data;
 	if (n < len_bit_statistics_t)
 		return -1;
 	for (int i = 0; i < 4; i++) {
@@ -74,9 +74,9 @@ size_t unmarshal_bit_statistics_t(bit_statistics_t *t, void *data, size_t n) {
 	return (p - data);
 }
 
-size_t unmarshal_adb3l_t(adb3l_t *t, void *data, size_t n) {
+size_t unmarshal_adb3l_t(adb3l_t *t, char *data, size_t n) {
 	ssize_t ret;
-	uint8_t *p = data;
+	char *p = data;
 	if (n < len_adb3l_t)
 		return -1;
 	for (int i = 0; i < 4; i++) {
@@ -99,9 +99,9 @@ size_t unmarshal_adb3l_t(adb3l_t *t, void *data, size_t n) {
 	return (p - data);
 }
 
-size_t unmarshal_core3h_t(core3h_t *t, void *data, size_t n) {
+size_t unmarshal_core3h_t(core3h_t *t, char *data, size_t n) {
 	ssize_t ret;
-	uint8_t *p = data;
+	char *p = data;
 	if (n < len_core3h_t)
 		return -1;
 	t->timestamp = (data[0] << 0) | (data[1] << 8) | (data[2] << 16) | (data[3] << 24);
@@ -126,9 +126,9 @@ size_t unmarshal_core3h_t(core3h_t *t, void *data, size_t n) {
 	return (p - data);
 }
 
-size_t unmarshal_bbc_t(bbc_t *t, void *data, size_t n) {
+size_t unmarshal_bbc_t(bbc_t *t, char *data, size_t n) {
 	ssize_t ret;
-	uint8_t *p = data;
+	char *p = data;
 	if (n < len_bbc_t)
 		return -1;
 	t->frequency = (data[0] << 0) | (data[1] << 8) | (data[2] << 16) | (data[3] << 24);
@@ -164,9 +164,9 @@ size_t unmarshal_bbc_t(bbc_t *t, void *data, size_t n) {
 	return (p - data);
 }
 
-size_t unmarshal_dbbc3_ddc_multicast_t(dbbc3_ddc_multicast_t *t, void *data, size_t n) {
+size_t unmarshal_dbbc3_ddc_multicast_t(dbbc3_ddc_multicast_t *t, char *data, size_t n) {
 	ssize_t ret;
-	uint8_t *p = data;
+	char *p = data;
 	if (n < len_dbbc3_ddc_multicast_t)
 		return -1;
 	for (int i = 0; i < 32; i++) {
@@ -403,7 +403,7 @@ json_t *marshal_json_dbbc3_ddc_multicast_t(dbbc3_ddc_multicast_t *t) {
 	json_t *ret;
 	if (root == NULL)
 		return NULL;
-	ret = json_stringn(version, 32);
+	ret = json_stringn(t->version, 32);
 	if (ret == NULL)
 		return NULL;
 	json_object_set_new(root, "version", ret);
