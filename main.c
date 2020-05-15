@@ -6,8 +6,11 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
+#include <jansson.h>
+
 #include "packet.h"
-#include "packet_marshal.h"
+#include "packet_unpack.h"
+#include "packet_json.h"
 
 const char mcast_addr[] = "224.0.0.255";
 const short mcast_port  = 25000;

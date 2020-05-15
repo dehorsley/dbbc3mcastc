@@ -19,12 +19,16 @@ typedef struct {
 
 typedef struct {
 	uint32_t pattern[4]; // Statistics for 00, 01, 10, 11
-} bit_statistics_t;
+} bit_statistics32_t;
 
 typedef struct {
-	uint32_t total_power[4];            // One per sampler
-	bit_statistics_t bit_statistics[4]; // One per sampler
-	uint32_t delay_correlation[3]; // S0-S1, S1-S2, S2-S3
+	uint16_t pattern[4]; // Statistics for 00, 01, 10, 11
+} bit_statistics16_t;
+
+typedef struct {
+	uint32_t total_power[4];              // One per sampler
+	bit_statistics32_t bit_statistics[4]; // One per sampler
+	uint32_t delay_correlation[3];        // S0-S1, S1-S2, S2-S3
 } adb3l_t;
 
 typedef struct {
@@ -37,16 +41,20 @@ typedef struct {
 } core3h_t;
 
 typedef struct {
-    uint32_t frequency;
-    uint8_t bandwidth;
-    uint8_t agc;
-    uint8_t gain_usb;
-    uint8_t gain_lsb;
+	uint32_t frequency;
+	uint8_t bandwidth;
+	uint8_t agc;
+	uint8_t gain_usb;
+	uint8_t gain_lsb;
 	uint32_t total_power_usb_cal_on;
 	uint32_t total_power_lsb_cal_on;
 	uint32_t total_power_usb_cal_off;
 	uint32_t total_power_lsb_cal_off;
-    bit_statistics_t bit_statistics;
+	bit_statistics16_t bit_statistics;
+    uint16_t tsys_usb;
+    uint16_t tsys_lsb;
+    uint16_t sefd_usb;
+    uint16_t sefd_lsb;
 } bbc_t;
 
 typedef struct {
